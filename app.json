@@ -1,0 +1,6 @@
+{
+    "name": "ringout_test",
+    "jsFiles": ["startup.js"],
+    "type": "foreground",
+    "displayName": "Ringout Test"
+}
