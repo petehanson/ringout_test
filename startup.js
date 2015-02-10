@@ -17,6 +17,18 @@ window.setSoftkey(1, 'Test', function() {
     var number = 404;
     util.debug("calling number " + number);
 
+    // While we're placing this call, make sure we do not exit when put into the
+    // background. As soon as we're back in the foreground after placing the
+    // call we will clear this state so we shutdown normally.
+    digium.app.exitAfterBackground = false;
+
+    digium.event.observe({
+        'eventName': 'digium.app.foreground',
+        'callback': function(params) {
+            digium.event.stopObserving({'eventName' : 'digium.app.foregrond'});
+            digium.app.exitAfterBackground = true;
+        }
+    });
 
     var callHandle = digium.phone.dial({
         'number': number,
